@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" width="400" height="400"></canvas>
+  <script src="../build/TinyRender.min.js"></script>
+  <script>
+    let canvas = document.getElementById('canvas')
+    let scene = new TinyRender.Engine(canvas)
+    let camera = new TinyRender.Camera()
+    camera.lookAt(0.1, 0, 0.5, 0, 0, 0, 0, 1, 0)
+    scene.setCamera(camera)
+    const vshader_source =
+    'attribute vec4 a_Position;\n' +
+    'attribute vec4 a_Color;\n' +
+    'uniform mat4 u_ViewMatrix;\n' +
+    'varying vec4 v_Color;\n' +
+    'void main() {\n' +
+    '  gl_Position = u_ViewMatrix * a_Position;\n' +
+    '  v_Color = a_Color;\n' +
+    '}\n';
+
+    // Fragment shader program
+    const fshader_source =
+    '#ifdef GL_ES\n' +
+    'precision mediump float;\n' +
+    '#endif\n' +
+    'varying vec4 v_Color;\n' +
+    'void main() {\n' +
+    '  gl_FragColor = v_Color;\n' +
+    '}\n'
+
+    let options = {
+      attributes: [
+        {
+          name: 'a_Position',
+          offset: 0,
+        },
+        {
+          name: 'a_Color',
+          offset: 3,
+        },
+      ],
+      uniforms: [
+        {
+          name: 'u_ViewMatrix',
+          data_idx: -1,
+        },
+      ],
+      attribute_stride: 6,
+      mode: 'triangles',
+      first: 0,
+      count: 9,
+      attributes_data: new Float32Array([
+         0.0,  0.5,  -0.4,  0.4,  1.0,  0.4,
+        -0.5, -0.5,  -0.4,  0.4,  1.0,  0.4,
+         0.5, -0.5,  -0.4,  1.0,  0.4,  0.4,
+
+         0.5,  0.4,  -0.2,  1.0,  0.4,  0.4,
+        -0.5,  0.4,  -0.2,  1.0,  1.0,  0.4,
+         0.0, -0.6,  -0.2,  1.0,  1.0,  0.4,
+
+         0.0,  0.5,   0.0,  0.4,  0.4,  1.0,
+        -0.5, -0.5,   0.0,  0.4,  0.4,  1.0,
+         0.5, -0.5,   0.0,  1.0,  0.4,  0.4,
+      ]),
+      uniforms_data: [],
+    }
+    let model = new TinyRender.Model(vshader_source, fshader_source, options)
+    scene.init()
+    scene.addModel(model)
+    scene.render()
+  </script>
+</body>
+</html>
