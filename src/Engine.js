@@ -30,6 +30,8 @@ class Engine {
         let uniform_data = null
         if (uniform_name === 'u_ViewMatrix' && uniform.data_idx === -1) {
           uniform_data = this.camera.viewMatrix.elements
+        } else if (uniform_name === 'u_ProjectionMatrix' && uniform.data_idx === -1) {
+          uniform_data = this.camera.projectionMatrix.elements
         } else {
           model.uniforms_data[uniform.data_idx]
         }

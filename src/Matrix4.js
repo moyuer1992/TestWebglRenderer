@@ -24,7 +24,7 @@ class Matrix4 {
     }
   }
   setRotate (x, y, z) {
-    var e, s, c, len, rlen, nc, xy, yz, zx, xs, ys, zs
+    let e, s, c, len, rlen, nc, xy, yz, zx, xs, ys, zs
 
     angle = Math.PI * angle / 180
     e = this.elements
@@ -118,7 +118,7 @@ class Matrix4 {
 
   }
   translate (x, y, z) {
-    var e = this.elements;
+    let e = this.elements
     e[12] += e[0] * x + e[4] * y + e[8]  * z
     e[13] += e[1] * x + e[5] * y + e[9]  * z
     e[14] += e[2] * x + e[6] * y + e[10] * z
@@ -126,7 +126,7 @@ class Matrix4 {
     return this;
   }
   setLookAt (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
-    var e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
+    let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
 
     fx = centerX - eyeX
     fy = centerY - eyeY
@@ -178,6 +178,87 @@ class Matrix4 {
 
     // Translate.
     return this.translate(-eyeX, -eyeY, -eyeZ)
+  }
+  setPerspective (fov, aspect, near, far) {
+    let e, rd, s, ct
+
+    if (near === far || aspect === 0) {
+      throw 'null frustum'
+    }
+    if (near <= 0) {
+      throw 'near <= 0'
+    }
+    if (far <= 0) {
+      throw 'far <= 0'
+    }
+
+    fov = Math.PI * fov / 180 / 2
+    s = Math.sin(fov)
+    if (s === 0) {
+      throw 'null frustum'
+    }
+
+    rd = 1 / (far - near)
+    ct = Math.cos(fov) / s
+
+    e = this.elements
+
+    e[0]  = ct / aspect
+    e[1]  = 0
+    e[2]  = 0
+    e[3]  = 0
+
+    e[4]  = 0
+    e[5]  = ct
+    e[6]  = 0
+    e[7]  = 0
+
+    e[8]  = 0
+    e[9]  = 0
+    e[10] = -(far + near) * rd
+    e[11] = -1
+
+    e[12] = 0
+    e[13] = 0
+    e[14] = -2 * near * far * rd
+    e[15] = 0
+
+    return this
+  }
+  setOrtho (left, right, bottom, top, near, far) {
+    var e, rw, rh, rd
+
+    if (left === right || bottom === top || near === far) {
+      throw 'null frustum'
+    }
+
+    rw = 1 / (right - left)
+    rh = 1 / (top - bottom)
+    rd = 1 / (far - near)
+
+    e = this.elements
+
+    e[0]  = 2 * rw
+    e[1]  = 0
+    e[2]  = 0
+    e[3]  = 0
+
+    e[4]  = 0
+    e[5]  = 2 * rh
+    e[6]  = 0
+    e[7]  = 0
+
+    e[8]  = 0
+    e[9]  = 0
+    e[10] = -2 * rd
+    e[11] = 0
+
+    e[12] = -(right + left) * rw
+    e[13] = -(top + bottom) * rh
+    e[14] = -(far + near) * rd
+    e[15] = 1
+
+    return this
   }
 }
 
