@@ -11,7 +11,7 @@
   <script>
     let canvas = document.getElementById('canvas')
     let scene = new TinyRender.Engine(canvas)
-    let camera = new TinyRender.OrthographicCamera(-2, 2, -2, 2, 1, -100)
+    let camera = new TinyRender.OrthographicCamera(-1, 1, -1, 1, 1, -100)
     camera.position = [0, 0, 0.5]
     camera.up = [0, 1, 0]
     camera.lookAt(0, 0, 0)
