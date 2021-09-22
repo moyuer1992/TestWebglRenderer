@@ -11,15 +11,17 @@ class Camera {
       this.up[0], this.up[1], this.up[2],
     )
   }
-  lookAt (atX, atY, atZ) {
+  lookAt (eyeX, eyeY, eyeZ, atX, atY, atZ, upX, upY, upZ) {
+    this.position = [eyeX, eyeY, eyeZ]
     this.at = [atX, atY, atZ]
+    this.up = [upX, upY, upZ]
     this.viewMatrix = new Matrix4().setLookAt(
       this.position[0],
       this.position[1],
       this.position[2],
-      atX,
-      atY,
-      atZ,
+      this.at[0],
+      this.at[1],
+      this.at[2],
       this.up[0],
       this.up[1],
       this.up[2],

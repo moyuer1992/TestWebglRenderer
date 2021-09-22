@@ -4,9 +4,8 @@ class Matrix4 {
     if (elements) this.set(elements)
   }
   set (elements) {
-    let e_arr = elements
     for (let i = 0; i < 16; i++) {
-      this.elements[i] = e_arr[i]
+      this.elements[i] = elements[i]
     }
   }
   multiply (other) {
