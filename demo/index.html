@@ -14,6 +14,16 @@
     let camera = new TinyRender.OrthographicCamera(-1.0, 1.0, -1.0, 1.0, 1, -100)
     camera.lookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0)
     scene.setCamera(camera)
+    // var vshader_source =
+    //   'attribute vec4 a_Position;\n' +
+    //   'attribute vec4 a_Color;\n' +
+    //   'uniform mat4 u_ProjectionMatrix;\n' +
+    //   'uniform mat4 u_ModelMatrix;\n' +
+    //   'varying vec4 v_Color;\n' +
+    //   'void main() {\n' +
+    //   '  gl_Position = u_ProjectionMatrix * u_ModelMatrix * a_Position;\n' +
+    //   '  v_Color = a_Color;\n' +
+    //   '}\n'
     var vshader_source =
       'attribute vec4 a_Position;\n' +
       'attribute vec4 a_Color;\n' +
@@ -24,7 +34,7 @@
       'void main() {\n' +
       '  gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' +
       '  v_Color = a_Color;\n' +
-      '}\n';
+      '}\n'
 
     var fshader_source =
       '#ifdef GL_ES\n' +
@@ -33,7 +43,7 @@
       'varying vec4 v_Color;\n' +
       'void main() {\n' +
       '  gl_FragColor = v_Color;\n' +
-      '}\n';
+      '}\n'
 
     let options = {
       attributes: [
@@ -66,17 +76,17 @@
       count: 9,
       attributes_data: new Float32Array([
         // Vertex coordinates and color
-         0.0,  0.6,  -0.4,  1.0,  0,  0, // The back red one
-        -0.5, -0.4,  -0.4,  1.0,  0,  0,
-         0.5, -0.4,  -0.4,  1.0,  0,  0,
+         0.0,  0.5,  -0.4,  1.0, 0.0, 0.0, // The back red one
+        -0.5, -0.5,  -0.4,  1.0, 0.0, 0.0,
+         0.5, -0.5,  -0.4,  1.0, 0.0, 0.0,
 
-         0.5,  0.4,  -0.2,  0,  1.0,  0, // The middle green one
-        -0.5,  0.4,  -0.2,  0,  1.0,  0,
-         0.0, -0.6,  -0.2,  0,  1.0,  0,
+        -0.25,  0.5,  0.1,  0.0, 1.0, 0.0, // The middle green one
+        -0.75, -0.5,  0.1,  0.0, 1.0, 0.0,
+         0.25, -0.5,  0.1,  0.0, 1.0, 0.0,
 
-         0.0,  0.5,   0.0,  0,  0,  1.0, // The front blue one
-        -0.5, -0.5,   0.0,  0,  0,  1.0,
-         0.5, -0.5,   0.0,  0,  0,  1.0,
+         0.25,  0.5,  0.0,  0.0, 0.0, 1.0, // The front blue one
+        -0.25, -0.5,  0.0,  0.0, 0.0, 1.0,
+         0.75, -0.5,  0.0,  0.0, 0.0, 1.0,
       ]),
       uniforms_data: [
         new TinyRender.Matrix4().elements,
