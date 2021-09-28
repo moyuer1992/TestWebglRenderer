@@ -14,8 +14,8 @@
     let camera = new TinyRender.OrthographicCamera(-1.0, 1.0, -1.0, 1.0, 1, -100)
     camera.lookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0)
     scene.setCamera(camera)
-    var vshader_source =
-    var vshader_source =
+
+    const vshader_source =
       'attribute vec4 a_Position;\n' +
       'attribute vec4 a_Color;\n' +
       'uniform mat4 u_ProjectionMatrix;\n' +
@@ -27,7 +27,7 @@
       '  v_Color = a_Color;\n' +
       '}\n'
 
-    var fshader_source =
+    const fshader_source =
       '#ifdef GL_ES\n' +
       'precision mediump float;\n' +
       '#endif\n' +
