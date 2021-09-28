@@ -126,60 +126,60 @@ class Matrix4 {
     e[15] += e[3] * x + e[7] * y + e[11] * z
     return this;
   }
-  setLookAt (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
-    let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
+   setLookAt (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
+     let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
 
-    fx = centerX - eyeX
-    fy = centerY - eyeY
-    fz = centerZ - eyeZ
+     fx = centerX - eyeX
+     fy = centerY - eyeY
+     fz = centerZ - eyeZ
 
-    // Normalize f.
-    rlf = 1 / Math.sqrt(fx*fx + fy*fy + fz*fz)
-    fx *= rlf
-    fy *= rlf
-    fz *= rlf
+     // Normalize f.
+     rlf = 1 / Math.sqrt(fx*fx + fy*fy + fz*fz)
+     fx *= rlf
+     fy *= rlf
+     fz *= rlf
 
-    // Calculate cross product of f and up.
-    sx = fy * upZ - fz * upY
-    sy = fz * upX - fx * upZ
-    sz = fx * upY - fy * upX
+     // Calculate cross product of f and up.
+     sx = fy * upZ - fz * upY
+     sy = fz * upX - fx * upZ
+     sz = fx * upY - fy * upX
 
-    // Normalize s.
-    rls = 1 / Math.sqrt(sx*sx + sy*sy + sz*sz)
-    sx *= rls
-    sy *= rls
-    sz *= rls
+     // Normalize s.
+     rls = 1 / Math.sqrt(sx*sx + sy*sy + sz*sz)
+     sx *= rls
+     sy *= rls
+     sz *= rls
 
-    // Calculate cross product of s and f.
-    ux = sy * fz - sz * fy
-    uy = sz * fx - sx * fz
-    uz = sx * fy - sy * fx
+     // Calculate cross product of s and f.
+     ux = sy * fz - sz * fy
+     uy = sz * fx - sx * fz
+     uz = sx * fy - sy * fx
 
-    // Set to this.
-    e = this.elements
-    e[0] = sx
-    e[1] = ux
-    e[2] = -fx
-    e[3] = 0;
+     // Set to this.
+     e = this.elements
+     e[0] = sx
+     e[1] = ux
+     e[2] = -fx
+     e[3] = 0;
 
-    e[4] = sy
-    e[5] = uy
-    e[6] = -fy
-    e[7] = 0;
+     e[4] = sy
+     e[5] = uy
+     e[6] = -fy
+     e[7] = 0;
 
-    e[8] = sz
-    e[9] = uz
-    e[10] = -fz
-    e[11] = 0
+     e[8] = sz
+     e[9] = uz
+     e[10] = -fz
+     e[11] = 0
 
-    e[12] = 0
-    e[13] = 0
-    e[14] = 0
-    e[15] = 1
+     e[12] = 0
+     e[13] = 0
+     e[14] = 0
+     e[15] = 1
 
-    // Translate.
-    return this.translate(-eyeX, -eyeY, -eyeZ)
-  }
+     // Translate.
+     return this.translate(-eyeX, -eyeY, -eyeZ)
+   }
   setPerspective (fov, aspect, near, far) {
     let e, rd, s, ct
 
@@ -226,55 +226,41 @@ class Matrix4 {
 
     return this
   }
-   setOrtho (left, right, bottom, top, near, far) {
-     var e, rw, rh, rd
- 
-     if (left === right || bottom === top || near === far) {
-       throw 'null frustum'
-     }
- 
-     rw = 1 / (right - left)
-     rh = 1 / (top - bottom)
-     rd = 1 / (far - near)
- 
-     e = this.elements
- 
-     e[0]  = 2 * rw
-     e[1]  = 0
-     e[2]  = 0
-     e[3]  = 0
- 
-     e[4]  = 0
-     e[5]  = 2 * rh
-     e[6]  = 0
-     e[7]  = 0
- 
-     e[8]  = 0
-     e[9]  = 0
-     e[10] = -2 * rd
-     e[11] = 0
- 
-     e[12] = -(right + left) * rw
-     e[13] = -(top + bottom) * rh
-     e[14] = -(far + near) * rd
-     e[15] = 1
- 
-     return this
-   }
+  setOrtho (left, right, bottom, top, near, far) {
+    var e, rw, rh, rd
 
-//   setOrtho (left, right, bottom, top, near, far) {
-//     const width = right - left;
-//     const height = top - bottom;
-//     const depth = far - near;
-// 
-//     this.set(new Float32Array([
-//       2 / width,               0.0,                      0.0,                   0.0,
-//       0.0,                     2 / height,               0.0,                   0.0,
-//       0.0,                     0.0,                      2 / depth,            0.0,
-//       -(left + right) / width, -(top + bottom) / height, -(near + far) / depth, 1.0
-//     ]));
-//     return this;
-//   }
+    if (left === right || bottom === top || near === far) {
+      throw 'null frustum'
+    }
+
+    rw = 1 / (right - left)
+    rh = 1 / (top - bottom)
+    rd = 1 / (far - near)
+
+    e = this.elements
+
+    e[0]  = 2 * rw
+    e[1]  = 0
+    e[2]  = 0
+    e[3]  = 0
+
+    e[4]  = 0
+    e[5]  = 2 * rh
+    e[6]  = 0
+    e[7]  = 0
+
+    e[8]  = 0
+    e[9]  = 0
+    e[10] = -2 * rd
+    e[11] = 0
+
+    e[12] = -(right + left) * rw
+    e[13] = -(top + bottom) * rh
+    e[14] = -(far + near) * rd
+    e[15] = 1
+
+    return this
+  }
 }
 
 export default Matrix4
