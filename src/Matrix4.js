@@ -1,7 +1,9 @@
 class Matrix4 {
   constructor (elements) {
-    this.elements = new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1])
     if (elements) this.set(elements)
+    else {
+      this.elements = new Float32Array([1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1])
+    }
   }
   set (elements) {
     for (let i = 0; i < 16; i++) {

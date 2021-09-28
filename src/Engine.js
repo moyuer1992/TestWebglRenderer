@@ -33,7 +33,7 @@ class Engine {
         } else if (uniform_name === 'u_ProjectionMatrix' && uniform.data_idx === -1) {
           uniform_data = this.camera.projectionMatrix.elements
         } else {
-          model.uniforms_data[uniform.data_idx]
+          uniform_data = model.options.uniforms_data[uniform.data_idx]
         }
         let u = gl.getUniformLocation(model.program, uniform_name)
         gl.uniformMatrix4fv(u, false, uniform_data)

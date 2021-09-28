@@ -19,9 +19,10 @@
       'attribute vec4 a_Color;\n' +
       'uniform mat4 u_ProjectionMatrix;\n' +
       'uniform mat4 u_ViewMatrix;\n' +
+      'uniform mat4 u_ModelMatrix;\n' +
       'varying vec4 v_Color;\n' +
       'void main() {\n' +
-      '  gl_Position = u_ProjectionMatrix * u_ViewMatrix * a_Position;\n' +
+      '  gl_Position = u_ProjectionMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;\n' +
       '  v_Color = a_Color;\n' +
       '}\n';
 
@@ -53,7 +54,11 @@
         {
           name: 'u_ProjectionMatrix',
           data_idx: -1,
-        }
+        },
+        {
+          name: 'u_ModelMatrix',
+          data_idx: 0,
+        },
       ],
       attribute_stride: 6,
       mode: 'triangles',
@@ -72,7 +77,9 @@
         -0.25, -0.5, 0.0,  0.0,  0.0,  1.0,
          0.75, -0.5, 0.0,  0.0,  0.0,  1.0,
       ]),
-      uniforms_data: [],
+      uniforms_data: [
+        new TinyRender.Matrix4().elements,
+      ],
     }
     let model = new TinyRender.Model(vshader_source, fshader_source, options)
     scene.init()
