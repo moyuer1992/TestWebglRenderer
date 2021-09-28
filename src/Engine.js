@@ -25,6 +25,26 @@ class Engine {
     for (let model of this.models) {
       model.init()
       model.use()
+
+      let attributes_data = model.options.attributes_data
+      let buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
+      gl.bufferData(gl.ARRAY_BUFFER, attributes_data, gl.STATIC_DRAW)
+      let FSIZE = attributes_data.BYTES_PER_ELEMENT
+      for (let attribute of model.options.attributes) {
+        let attribute_name = attribute.name
+        let a = gl.getAttribLocation(model.program, attribute_name)
+        gl.vertexAttribPointer(
+          a,
+          3,
+          gl.FLOAT,
+          false,
+          FSIZE * model.options.attribute_stride,
+          FSIZE * attribute.offset
+        )
+        gl.enableVertexAttribArray(a)
+      }
+
       for (let uniform of model.options.uniforms) {
         let uniform_name = uniform.name
         let uniform_data = null
