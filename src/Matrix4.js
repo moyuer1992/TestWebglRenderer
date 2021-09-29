@@ -128,10 +128,9 @@ class Matrix4 {
   }
   setLookAt (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
     let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
-
-    fx = centerX - eyeX
-    fy = centerY - eyeY
-    fz = centerZ - eyeZ
+    fx = -(centerX - eyeX)
+    fy = -(centerY - eyeY)
+    fz = -(centerZ - eyeZ)
 
     // Normalize f.
     rlf = 1 / Math.sqrt(fx*fx + fy*fy + fz*fz)
@@ -157,17 +156,17 @@ class Matrix4 {
 
     // Set to this.
     e = this.elements
-    e[0] = -sx
+    e[0] = sx
     e[1] = ux
     e[2] = fx
     e[3] = 0;
 
-    e[4] = -sy
+    e[4] = sy
     e[5] = uy
     e[6] = fy
     e[7] = 0;
 
-    e[8] = -sz
+    e[8] = sz
     e[9] = uz
     e[10] = fz
     e[11] = 0
@@ -251,12 +250,12 @@ class Matrix4 {
 
     e[8]  = 0
     e[9]  = 0
-    e[10] = 2 * rd
+    e[10] = -2 * rd
     e[11] = 0
 
     e[12] = -(right + left) * rw
     e[13] = -(top + bottom) * rh
-    e[14] = -(far + near) * rd
+    e[14] = -(near + far) * rd
     e[15] = 1
 
     return this

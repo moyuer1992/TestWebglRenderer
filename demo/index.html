@@ -12,7 +12,7 @@
     let canvas = document.getElementById('canvas')
     let scene = new TinyRender.Engine(canvas)
     let camera = new TinyRender.OrthographicCamera(-1.0, 1.0, -1.0, 1.0, 1, -100)
-    camera.lookAt(0, 0, 0.5, 0, 0, 0, 0, 1, 0)
+    camera.lookAt(0, 0, 5.0, 0, 0, 0, 0, 1, 0)
     scene.setCamera(camera)
 
     const vshader_source =
@@ -49,11 +49,11 @@
       ],
       uniforms: [
         {
-          name: 'u_ViewMatrix',
+          name: 'u_ProjectionMatrix',
           data_idx: -1,
         },
         {
-          name: 'u_ProjectionMatrix',
+          name: 'u_ViewMatrix',
           data_idx: -1,
         },
         {
