@@ -128,9 +128,9 @@ class Matrix4 {
   }
   setLookAt (eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ) {
     let e, fx, fy, fz, rlf, sx, sy, sz, rls, ux, uy, uz
-    fx = -(centerX - eyeX)
-    fy = -(centerY - eyeY)
-    fz = -(centerZ - eyeZ)
+    fx = eyeX - centerX
+    fy = eyeY - centerY
+    fz = eyeZ - centerZ
 
     // Normalize f.
     rlf = 1 / Math.sqrt(fx*fx + fy*fy + fz*fz)
